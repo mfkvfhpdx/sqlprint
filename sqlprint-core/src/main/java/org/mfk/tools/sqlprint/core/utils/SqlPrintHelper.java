@@ -19,11 +19,11 @@ public class SqlPrintHelper {
     }
 
     /**
-     * @param className               数据库执行sql过程中，实际的类名
+     * @param pkgPrefix               数据库执行sql过程中，statement所在包
      * @param statementSqlMapperClazz 对应数据库statement的sql提取实现
      */
-    public static void addStatementSqlImpl(String className, Class statementSqlMapperClazz) {
-        StatementSqlFactory.addStatementSqlImpl(className, statementSqlMapperClazz);
+    public static void addStatementSqlImpl(String pkgPrefix, Class statementSqlMapperClazz) {
+        StatementSqlFactory.addStatementSqlImpl(pkgPrefix, statementSqlMapperClazz);
     }
 
     public static void printSql(Statement statement, Object object) {

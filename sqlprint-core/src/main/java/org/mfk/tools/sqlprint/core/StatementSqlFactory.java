@@ -56,8 +56,10 @@ public class StatementSqlFactory {
         return (IStatementSql) con.newInstance(statement, otherParams);
     }
 
+
     /**
-     * @param className               数据库执行sql过程中，实际的类名
+     *
+     * @param className 数据库执行sql过程中，实际的类名
      * @param statementSqlMapperClazz 对应数据库statement的sql提取实现
      */
     public static void addStatementSqlImpl(String className, Class statementSqlMapperClazz) {

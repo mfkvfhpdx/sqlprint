@@ -25,6 +25,11 @@ public class AgentConfig {
         return CODE_INJECTION_MAPPER.get(key);
     }
 
+    /**
+     *
+     * @param key 类路径
+     * @param clazz 代码注入实现类，需实现ICodeInjection接口
+     */
     public static void register(String key, Class<ICodeInjection> clazz) {
         CODE_INJECTION_MAPPER.put(key, clazz);
     }
