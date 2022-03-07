@@ -31,7 +31,7 @@
       <artifactId>sqlprint-agent</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
-    <!-- 核心包，需要必须引入 -->
+    <!-- 核心包，需要引入 -->
     <dependency>
       <groupId>org.mfk.tools</groupId>
       <artifactId>sqlprint-core</artifactId>
