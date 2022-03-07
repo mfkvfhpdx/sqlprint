@@ -122,3 +122,7 @@ public class DbswitchSqlPrintImpl  extends AbstractSqlPrinter implements ISqlPri
 | :-----| :---- | :---- |
 | SqlPrintHelper.addStatementSqlImpl | String className:数据库执行sql过程中<br>Class statementSqlMapperClazz:对应数据库statement的sql提取实现，需实现IStatementSql | 添加sql获取实现，可覆盖包内原始实现，或新增新数据库实现|
 | AgentConfig.register  | String key:类路径 <br> Class<ICodeInjection> clazz：代码注入实现类，需实现ICodeInjection接口 |添加对应statement的代码注入实现 |
+
+## 九、项目在两个平台上的地址
+gitee:https://gitee.com/mfkvfhpdx/sqlprint  
+github:https://github.com/mfkvfhpdx/sqlprint
