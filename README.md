@@ -112,6 +112,10 @@ public class DbswitchSqlPrintImpl  extends AbstractSqlPrinter implements ISqlPri
     }
 }
 ```
+然后在main方法中调用(设置一次即可，项目任意处)  SqlPrintHelper.setSqlPrinter 方法来设置输出实现
+```
+SqlPrintHelper.setSqlPrinter(new DbswitchSqlPrintImpl());
+```
 上图实现的输出sql效果如下，支持了代码定位，和输出了哪个库的URL输出的sql:
 ![sqlprint](images/dbswitch_sqlprint.png)
 * @param className:数据库执行sql过程中，实际的类名
