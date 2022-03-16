@@ -17,13 +17,15 @@
 下面是测试过的，驱动版本，未测试过的一般只要是Oracle,mysql,sqlserver,kingbase8.6这几个数据库的情况下，一般都可以使用。
 
 | 数据库类型 | 驱动版本 |
-| :-----| ----: |
-| Oracle | ojdbc14,ojdbc8,ojdbc-10 |
+| :-----| ---- |
+| Oracle | 全版本支持 |
 | Mysql  | mysql5.xxx,mysql8.xx | 
 | Sqlserver  | sqljdbc4-4.0 | 
 | kingbase8  | kingbase8.6 | 
 
 ## 六、使用说明
+生成的jar的放在bulid目录下，可以直接下载使用。
+
     <!-- 
     如果通过javaagent方式使用，可以不引入， 但如果需要通过JarCodeInjectionUtils.injection生成class文件，则要引入此jar包 -->
     <dependency>
