@@ -27,13 +27,13 @@ public class OracleStatementSqlImpl extends AbstractStatementSql implements ISta
             for (int i = 0; i < count; i++) {
                 Object obj = Array.get(binds, i);
                 String val = null;
-                String className = obj.getClass().getName();
+
                 if (obj == null){
                     val=converObjectSplicingString(val);
                     splicingParameters.add(val);
                     continue;
                 }
-
+                String className = obj.getClass().getName();
                 if (RefactUtils.getField(obj.getClass(), "paramVal") != null) {
                     val = converObjectSplicingString(RefactUtils.getFieldValue(obj, "paramVal"));
                 } else {
