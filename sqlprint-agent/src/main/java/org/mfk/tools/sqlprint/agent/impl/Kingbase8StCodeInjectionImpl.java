@@ -12,4 +12,8 @@ public class Kingbase8StCodeInjectionImpl extends AbstractCodeInjection implemen
         super.insertBeforeCommon(ctClass, METHOD_NAMES, "$0,$1");
         return super.injection(ctClass);
     }
+    @Override
+    public byte[] injection(byte[] bytes) throws Exception {
+        return super.injectionAsm(bytes,METHOD_NAMES,new String[]{"$0","$1"});
+    }
 }

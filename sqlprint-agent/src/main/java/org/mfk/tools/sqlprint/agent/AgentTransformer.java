@@ -18,9 +18,16 @@ public class AgentTransformer implements ClassFileTransformer {
             ICodeInjection icg = null;
             try {
                 icg = CodeInjectionFactory.createCodeInjection(className);
-                final ClassPool classPool = ClassPool.getDefault();
-                final CtClass clazz = classPool.get(targetClassName);
-                return icg.injection(clazz);
+                byte[] resbytes=null;
+                try {
+                    resbytes=icg.injection(classfileBuffer);
+                }catch (Exception e) {
+                    System.out.println("asm注入失败，将使用javassist进行注入");
+                    final ClassPool classPool = ClassPool.getDefault();
+                    final CtClass clazz = classPool.get(targetClassName);
+                    return icg.injection(clazz);
+                }
+                return resbytes;
             } catch (Exception e) {
                 e.printStackTrace();
             }

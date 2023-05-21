@@ -12,4 +12,8 @@ public class MysqlPSCodeInjectionImpl extends AbstractCodeInjection implements I
         super.insertBeforeCommon(ctClass, METHOD_NAMES, "$0");
         return super.injection(ctClass);
     }
+    @Override
+    public byte[] injection(byte[] bytes) throws Exception {
+        return super.injectionAsm(bytes,METHOD_NAMES,new String[]{"$0"});
+    }
 }

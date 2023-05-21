@@ -4,5 +4,6 @@ import javassist.CtClass;
 
 public interface ICodeInjection {
 
-    public byte[] injection(CtClass ctClass) throws Exception;
+    public byte[] injection(Object obj) throws Exception;
+
 }
