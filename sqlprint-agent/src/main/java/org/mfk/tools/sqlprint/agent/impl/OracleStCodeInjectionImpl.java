@@ -18,7 +18,7 @@ public class OracleStCodeInjectionImpl extends AbstractCodeInjection implements 
     }
     @Override
     public byte[] injection(byte[] bytes) throws Exception {
-        OracleStatementVisitor classVisitor=new  OracleStatementVisitor(Opcodes.ASM8,new ClassWriter(ClassWriter.COMPUTE_MAXS));
+        OracleStatementVisitor classVisitor=new  OracleStatementVisitor(Opcodes.ASM8,new ClassWriter(ClassWriter.COMPUTE_FRAMES));
         ClassReader classReader=new ClassReader(bytes);
         classReader.accept(classVisitor,ClassReader.EXPAND_FRAMES);
         byte[] data=classVisitor.toByteArray();
