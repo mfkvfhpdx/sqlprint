@@ -16,17 +16,15 @@ public class OracleStCodeInjectionImpl extends AbstractCodeInjection implements 
         super.insertBefore(ctClass, METHOD_NAMES, "{if($1){" + PRINT_METHOD + "($0);}}");
         return super.injection(ctClass);
     }
+
     @Override
     public byte[] injection(byte[] bytes) throws Exception {
-        OracleStatementVisitor classVisitor=new  OracleStatementVisitor(Opcodes.ASM8,new ClassWriter(ClassWriter.COMPUTE_FRAMES));
-        ClassReader classReader=new ClassReader(bytes);
-        classReader.accept(classVisitor,ClassReader.EXPAND_FRAMES);
-        byte[] data=classVisitor.toByteArray();
+        OracleStatementVisitor classVisitor = new OracleStatementVisitor(Opcodes.ASM8, new ClassWriter(getClassWriterFlags(bytes)));
+        ClassReader classReader = new ClassReader(bytes);
+        classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
+        byte[] data = classVisitor.toByteArray();
         return data;
     }
-
-
-
 
 
 }
