@@ -7,8 +7,6 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
-import java.io.File;
-
 public abstract class AbstractCodeInjection implements ICodeInjection {
     protected static final String PRINT_METHOD = "org.mfk.tools.sqlprint.core.utils.SqlPrintHelper.printSql";
 
@@ -59,11 +57,10 @@ public abstract class AbstractCodeInjection implements ICodeInjection {
 
     public byte[] injection(Object obj) throws Exception {
         byte[] byteCode = null;
-        if (obj instanceof CtClass) {
-            byteCode = injection((CtClass) obj);
-        }
         if (obj instanceof byte[]) {
             byteCode = injection((byte[]) obj);
+        }else if(obj instanceof CtClass) {
+            byteCode = injection((CtClass) obj);
         }
         return byteCode;
     }

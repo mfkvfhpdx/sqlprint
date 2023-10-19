@@ -8,10 +8,25 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class AgentTransformer implements ClassFileTransformer {
+    private boolean debug=false;
+    AgentTransformer(String mode){
+
+        if (mode!=null){
+            String[] modes= mode.split(",");
+            for (int i = 0; i < modes.length; i++) {
+                if ("debug".equals(modes[i])){
+                    debug=true;
+                }
+            }
+        }
+
+    }
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-
+        if (debug&&className!=null&&(className.indexOf("oracle")>0||className.indexOf("mysql")>0||className.indexOf("sqlserver")>0||className.indexOf("kingbase8")>0)){
+            System.out.println("SqlprintAgent:"+className);
+        }
         if (AgentConfig.isRegister(className)) {
 
             String targetClassName = className.replaceAll("/", ".");
@@ -20,9 +35,19 @@ public class AgentTransformer implements ClassFileTransformer {
                 icg = CodeInjectionFactory.createCodeInjection(className);
                 byte[] resbytes=null;
                 try {
+                    if (debug){
+                        System.out.println("使用asm进行注入:"+targetClassName);
+                    }
                     resbytes=icg.injection(classfileBuffer);
-                }catch (Exception e) {
-                    System.out.println("asm注入失败，将使用javassist进行注入");
+                    if (debug){
+                        System.out.println("asm注入成功:"+targetClassName);
+                    }
+                }catch (Throwable e) {
+                    if (debug){
+                        e.printStackTrace();
+                        System.out.println("使用javassist进行注入:"+targetClassName);
+                    }
+
                     final ClassPool classPool = ClassPool.getDefault();
                     final CtClass clazz = classPool.get(targetClassName);
                     return icg.injection(clazz);
