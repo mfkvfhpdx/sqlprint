@@ -20,6 +20,9 @@ public class SqlprintAgent {
             }
 
         }
+        if (agentArgs == null){
+            agentArgs= "";
+        }
         inst.addTransformer(new AgentTransformer(agentArgs), true);
         if (agentArgs.indexOf("debug") >= 0) {
             System.out.println("sqlprint end!");

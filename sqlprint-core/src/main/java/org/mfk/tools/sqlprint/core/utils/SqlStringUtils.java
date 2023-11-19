@@ -6,6 +6,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SqlStringUtils {
     private static final String separator= File.separator;
@@ -121,6 +122,25 @@ public class SqlStringUtils {
 		// 把替换的字符串恢复成问号
 		if (hasdyWh) {
 			sql = sql.replaceAll(replaceQmValue, "?");
+		}
+		if (sql != null && parameters != null && parameters.size() > 0 && sql.indexOf(":1")>0){
+			boolean check=true;
+			//如果存在 : 占位符并且和能对应参数
+			for (int j= parameters.size(); j >= 1; j--) {
+				if (sql.indexOf(":"+j)==-1){
+					check=false;
+					break;
+				}
+			}
+			if (check){
+				for (int j= parameters.size(); j >= 1; j--) {
+					String oj=parameters.get(j-1);
+					if (oj == null){
+						oj = "null";
+					}
+					sql=sql.replaceAll(Pattern.quote(":"+j),Matcher.quoteReplacement(oj));
+				}
+			}
 		}
 		return sql;
 	}
