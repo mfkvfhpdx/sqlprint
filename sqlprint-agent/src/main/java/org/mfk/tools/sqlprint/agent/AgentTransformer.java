@@ -2,6 +2,7 @@ package org.mfk.tools.sqlprint.agent;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import org.mfk.tools.sqlprint.agent.utils.StringUtils;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -12,12 +13,7 @@ public class AgentTransformer implements ClassFileTransformer {
     AgentTransformer(String mode){
 
         if (mode!=null){
-            String[] modes= mode.split(",");
-            for (int i = 0; i < modes.length; i++) {
-                if ("debug".equals(modes[i])){
-                    debug=true;
-                }
-            }
+            debug= StringUtils.containsDebug(mode);
         }
 
     }

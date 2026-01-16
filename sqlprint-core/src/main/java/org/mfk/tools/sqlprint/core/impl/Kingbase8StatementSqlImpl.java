@@ -41,14 +41,28 @@ public class Kingbase8StatementSqlImpl extends AbstractStatementSql implements I
             uuidArrayAssistant.addMethod("buildElement","buildElement",new Class[]{byte[].class, int.class,int.class});
         }
         if (statement.getClass().getName().equals("com.kingbase8.jdbc.KbStatement")){
-            sql = RefactUtils.getFieldValue(otherparams, "key.sql").toString();
+            try {
+                sql = RefactUtils.getFieldValue(otherparams, "key.sql").toString();
+            } catch (Exception e) {
+                sql = RefactUtils.getFieldValue(otherparams, "_key.sqlString").toString();
+            }
+
         }else {
+            Object binds = null;
+            boolean hs_ = false;
+            try {
+                sql = RefactUtils.getFieldValue(statement, "preparedQuery.key").toString();
+                preparedParameters = RefactUtils.getFieldValue(statement, "preparedParameters");
+                binds = RefactUtils.getFieldValue(preparedParameters, "paramValues");
+            }catch (Exception e){
+                hs_ = true;
+                sql = RefactUtils.getFieldValue(statement, "preparedQuery._key").toString();
+                preparedParameters = RefactUtils.getFieldValue(statement, "preparedParameterList");
+                binds = RefactUtils.getFieldValue(preparedParameters, "_paramValues");
+            }
             // sql赋值
-            sql = RefactUtils.getFieldValue(statement, "preparedQuery.key").toString();
 
             // 拼接字段赋值
-            preparedParameters = RefactUtils.getFieldValue(statement, "preparedParameters");
-            Object binds = RefactUtils.getFieldValue(preparedParameters, "paramValues");
 
             if (binds != null) {
                 paramValues = (Object[]) binds;
@@ -56,7 +70,7 @@ public class Kingbase8StatementSqlImpl extends AbstractStatementSql implements I
                 for (int i = 0; i < count; i++) {
                     Object obj = Array.get(binds, i);
                     try {
-                        obj = getValue(i, false);
+                        obj = getValue(i, false,hs_);
                     } catch (Exception e) {
 
                         e.printStackTrace();
@@ -72,10 +86,14 @@ public class Kingbase8StatementSqlImpl extends AbstractStatementSql implements I
         return "to_date('" + defaultDateFormat.format(date) + "','yyyy-mm-dd hh24:mi:ss')";
     }
 
-    public Object getValue(int index, boolean standardConformingStrings) throws Exception {
+    public Object getValue(int index, boolean standardConformingStrings,boolean hs_) throws Exception {
 
-        int[] paramTypes = (int[]) RefactUtils.getFieldValue(this.preparedParameters, "paramTypes");
-        byte[] flags = (byte[]) RefactUtils.getFieldValue(this.preparedParameters, "flags");
+        String pre="";
+        if (hs_) {
+            pre="_";
+        }
+        int[] paramTypes = (int[]) RefactUtils.getFieldValue(this.preparedParameters, pre+"paramTypes");
+        byte[] flags = (byte[]) RefactUtils.getFieldValue(this.preparedParameters, pre+"flags");
 
         if (NULL_OBJECT == null) {
             NULL_OBJECT = RefactUtils.getFieldValue(this.preparedParameters, "NULL_OBJECT");
