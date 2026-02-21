@@ -11,7 +11,7 @@
 3、需要实现sql捕获的场景  
 
 ## 四、使用环境
-项目jdk版本在1.6及以上，都能够使用。
+项目jdk版本在1.8及以上，都能够使用。
 
 ## 五、支持数据库类型及驱动版本
 下面是测试过的，驱动版本，未测试过的一般只要是Oracle,mysql,sqlserver,kingbase8.6这几个数据库的情况下，一般都可以使用。
@@ -129,6 +129,22 @@ SqlPrintHelper.setSqlPrinter(new DbswitchSqlPrintImpl());
 | SqlPrintHelper.addStatementSqlImpl | String className:数据库执行sql过程中<br>Class statementSqlMapperClazz:对应数据库statement的sql提取实现，需实现IStatementSql | 添加sql获取实现，可覆盖包内原始实现，或新增新数据库实现|
 | AgentConfig.register  | String key:类路径 <br> Class<ICodeInjection> clazz：代码注入实现类，需实现ICodeInjection接口 |添加对应statement的代码注入实现 |
 
-## 九、项目在两个平台上的地址
+## 九、入参支持
+
+```
+-javaagent:D:\dev\tools\sqlprint\sqlprint-agent-1.0.1-SNAPSHOT.jar=debug;config:maxStackTraces=20&includePatterns=com.alibaba.nacos**
+```
+
+- 多个参数用 `;` 分隔
+
+### 参数说明
+- `debug`：调试模式
+
+- `config`：配置项，内部多参数用 `&` 分隔
+    - `maxStackTraces=20`：输出最大堆栈数量
+    - `includePatterns=com.alibaba.nacos**`：堆栈包含过滤，支持通配符 `*` 和 `**`
+    - `excludePatterns=spring.xxx`：堆栈排除过滤，支持通配符 `*` 和 `**`
+    - `outputPath=abc.log`：输出文件路径
+## 十、项目在两个平台上的地址
 gitee:https://gitee.com/mfkvfhpdx/sqlprint  
 github:https://github.com/mfkvfhpdx/sqlprint
