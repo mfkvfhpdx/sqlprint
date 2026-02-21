@@ -42,11 +42,14 @@ public class MysqlStatementSqlImpl extends AbstractStatementSql implements IStat
                     if (objval instanceof byte[]) {
                         try {
                             value = new String((byte[]) objval, charEncoding);
+                            splicingParameters.add(value);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
+                    }else {
+                        splicingParameters.add(converObjectSplicingString(objval));
                     }
-                    splicingParameters.add(value);
+
                 }
             }
         } else {
